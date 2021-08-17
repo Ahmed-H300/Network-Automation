@@ -4,7 +4,7 @@ j = 1
 for por in ['COM6', 'COM7', 'COM8', 'COM9']:
     with serial.Serial(port=por) as console:
         if not console.isOpen():
-            print('sorry can\'t connect!')
+            print(f'sorry can\'t connect! with {por}')
         else:
             print(f'Serial of port {por} is connected successfully')
             console.write(b'\n')
@@ -104,3 +104,4 @@ for por in ['COM6', 'COM7', 'COM8', 'COM9']:
                 time.sleep(1)
                 console.write(b'\n')
                 time.sleep(1)
+                j += 1
