@@ -1,0 +1,23 @@
+!=============== Serial ================
+hostname R1
+enable secret cisco
+ip domain-name local
+crypto key generate rsa 
+2048
+ip ssh version 2
+username admin password cisco
+line vty 0 4
+transport input ssh
+login local
+
+! interface config
+interface ethernet 0/0
+ip address 192.168.10.1 255.255.255.0
+no shut
+!======================================
+
+
+!============ Netmiko =================
+! static route
+ip route 10.1.1.0 255.255.255.0 192.168.11.1
+!======================================
