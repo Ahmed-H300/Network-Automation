@@ -17,8 +17,8 @@ Switch(config-if)exit
 
 
 
-Switch(config)interface fastEthernet 0/0
-Switch(config-if)#switch port mode trunk
+Switch(config)interface Ethernet 0/0
+Switch(config-if)#switchport mode trunk
 Switch(config-if)#switch port allowed Vlan (all or 100:200)
 Switch(config)interface fastEthernet 0/2
 Switch(config-if)#switch port mode access

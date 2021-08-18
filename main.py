@@ -3,6 +3,25 @@ import time
 import xlrd
 i = 1
 j = 1
+
+def vlan_switch(file_name):
+    book = xlrd.open_workbook(file_name)
+    sheet = book.sheet_by_name(book.sheet_names()[0])
+    console.write(b'no \n')
+    for i in range(2, sheet.nrows):
+                    x = sheet.row_values(i)
+                    val = x[2]
+                    if (type(val) == str and val.find(':')):
+                        val= val.replace(':','-')
+                    else:
+                        val = str(int(val))
+                    vlan = "vlan " + val + '\n'
+                    console.write(vlan.encode())
+                    console.write(b'exit \n')
+
+
+                    
+
 for por in ['COM6', 'COM7', 'COM8', 'COM9']:
     with serial.Serial(port=por) as console:
         if not console.isOpen():
@@ -61,7 +80,7 @@ for por in ['COM6', 'COM7', 'COM8', 'COM9']:
                 console.write(b'login local\n')
                 time.sleep(1)
 
-                #===================== router interface ================================
+                # #===================== router interface ================================
                 if por in ['COM6']:
                     for index in range(1, 5, 2):
                         data_row = sheet.row_values(index)
@@ -85,6 +104,7 @@ for por in ['COM6', 'COM7', 'COM8', 'COM9']:
                         console.write(intf_ip.encode()+b'\n')
                         time.sleep(1)
                 i += 1
+
 # To configure switches
             else:
                 book = xlrd.open_workbook('Switches_SSH-data.xlsx')
@@ -129,4 +149,5 @@ for por in ['COM6', 'COM7', 'COM8', 'COM9']:
                 time.sleep(1)
                 console.write(b'\n')
                 time.sleep(1)
+                vlan_switch(f'switch {j} ports.xlsx')
                 j += 1
