@@ -18,7 +18,6 @@ for por in ['COM6', 'COM7', 'COM8', 'COM9']:
                 if 'initial configuration dialog?' in data:
                     console.write(b'no\n')
                     console.write(b'\n')
-                    time.sleep(1)
                     time.sleep(15)
                     console.write(b'\n')
                     time.sleep(1)
@@ -80,8 +79,6 @@ for por in ['COM6', 'COM7', 'COM8', 'COM9']:
                 time.sleep(1)
                 console.write(b'login local\n')
                 time.sleep(1)
-                console.write(b'password 7\n')
-                time.sleep(1)
                 console.write(b'exit\n')
                 time.sleep(1)
                 username = data_row[1]
@@ -92,12 +89,14 @@ for por in ['COM6', 'COM7', 'COM8', 'COM9']:
                 book_R = xlrd.open_workbook('Routers_data.xlsx')
                 sheet_R = book_R.sheet_by_name('Sheet1')
                 data_row_R = sheet_R.row_values(j)
-                ip_R = 'ip default-gateway '+ data_row_R[5]
+                R = data_row_R[5].split('/')
+                ip_R = 'ip default-gateway '+ R[0]
                 console.write(ip_R.encode() + b'\n')
                 time.sleep(1)
                 console.write(b'interface VLAN 1\n')
                 time.sleep(1)
-                ip = 'ip address '+data_row[5] + ' 255.255.255.0'
+                S = data_row[5].split('/')
+                ip = 'ip address '+S[0] + ' 255.255.255.0'
                 console.write(ip.encode() + b'\n')
                 time.sleep(1)
                 console.write(b'exit\n')

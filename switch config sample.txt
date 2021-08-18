@@ -1,0 +1,26 @@
+Switch>enable
+Switch#configure terminal
+Switch(config)#hostname switch1
+Switch(config)#ip domain-name local
+switch(config)# crypto key generate rsa
+
+Switch(config)# line vty 0 4
+(config-line)# transport input ssh
+(config-line)# login local
+(config-line)# exit
+switch(config)# username ramesh password mypassword
+
+Switch(config)# ip default-gateway 192.168.101.1 (router interface ip)
+Switch(config)#interface VLAN 1
+Switch(config-if)#ip address 192.168.1.241 255.255.255.0 (sample IP not the needed one)
+Switch(config-if)exit
+
+
+
+Switch(config)interface fastEthernet 0/0
+Switch(config-if)#switch port mode trunk
+Switch(config-if)#switch port allowed Vlan (all or 100:200)
+Switch(config)interface fastEthernet 0/2
+Switch(config-if)#switch port mode access
+Switch(config-if)#switch port access vlan 15
+
