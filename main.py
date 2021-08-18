@@ -1,4 +1,6 @@
-import serial, time, xlrd
+import serial
+import time
+import xlrd
 i = 1
 j = 1
 for por in ['COM6', 'COM7', 'COM8', 'COM9']:
@@ -54,10 +56,34 @@ for por in ['COM6', 'COM7', 'COM8', 'COM9']:
                 time.sleep(1)
                 console.write(b'line vty 0 4\n')
                 time.sleep(1)
-                console.write(b'transport input telnet ssh\n')
+                console.write(b'transport input ssh\n')
                 time.sleep(1)
                 console.write(b'login local\n')
                 time.sleep(1)
+
+                #===================== router interface ================================
+                if por in ['COM6']:
+                    for index in range(1, 5, 2):
+                        data_row = sheet.row_values(index)
+                        interface = 'interface ethernet 0/' + \
+                            str(int(data_row[4]))
+                        console.write(interface.encode()+b'\n')
+                        time.sleep(1)
+                        intf_ip = 'ip address'+" " + \
+                            str(data_row[5])+" "+"255.255.255.0"
+                        console.write(intf_ip.encode()+b'\n')
+                        time.sleep(1)
+                elif por in ['COM7']:
+                    for index in range(2, 6, 2):
+                        data_row = sheet.row_values(index)
+                        interface = 'interface ethernet 0/' + \
+                            str(int(data_row[4]))
+                        console.write(interface.encode()+b'\n')
+                        time.sleep(1)
+                        intf_ip = 'ip address'+" " + \
+                            str(data_row[5])+" "+"255.255.255.0"
+                        console.write(intf_ip.encode()+b'\n')
+                        time.sleep(1)
                 i += 1
 # To configure switches
             else:
@@ -90,7 +116,7 @@ for por in ['COM6', 'COM7', 'COM8', 'COM9']:
                 sheet_R = book_R.sheet_by_name('Sheet1')
                 data_row_R = sheet_R.row_values(j)
                 R = data_row_R[5].split('/')
-                ip_R = 'ip default-gateway '+ R[0]
+                ip_R = 'ip default-gateway ' + R[0]
                 console.write(ip_R.encode() + b'\n')
                 time.sleep(1)
                 console.write(b'interface VLAN 1\n')
