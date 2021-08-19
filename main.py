@@ -94,6 +94,7 @@ try:
                             # intf_ip = 'ip address'+" " + \    # /24 must be included in the excel sheet
                             #     str(data_row[5])+" "+"255.255.255.0"
                             console.write(intf_ip.encode() + b'\n')
+                            console.write(b'no shut \n')
                             time.sleep(1)
                     elif por in ['COM7']:
                         for index in range(2, 6, 2):
@@ -106,6 +107,7 @@ try:
                             # intf_ip = 'ip address'+" " + \
                             #     str(data_row[5])+" "+"255.255.255.0"
                             console.write(intf_ip.encode() + b'\n')
+                            console.write(b'no shut \n')
                             time.sleep(1)
                     i += 1
 
@@ -148,6 +150,7 @@ try:
                     S = data_row[5].split('/')
                     ip = 'ip address ' + S[0] + ' 255.255.255.0'
                     console.write(ip.encode() + b'\n')
+                    console.write(b'no shut \n')
                     time.sleep(1)
                     console.write(b'exit\n')
                     time.sleep(1)
