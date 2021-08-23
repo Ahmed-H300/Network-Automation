@@ -149,6 +149,12 @@ try:
                             # to keep the interface up and running
                             console.write(b'no shut \n')
                             time.sleep(1)
+                            console.write(b'exit \n')
+                            ip_route = 'ip route ' + str(data_row[5])[0:-4] +'0' \
+                                      +' 255.255.255.0 ' +str(sheet.cell(2,5).value)[0:-3]
+                            console.write(ip_route.encode() + b'\n')
+                            time.sleep(3)
+                        
                     elif por in ['COM7']:
                         for index in range(2, 6, 2):
                             data_row = sheet.row_values(index)
@@ -162,6 +168,12 @@ try:
                             console.write(intf_ip.encode() + b'\n')
                             console.write(b'no shut \n')
                             time.sleep(1)
+                            console.write(b'exit \n')
+                            ip_route = 'ip route ' + str(data_row[5])[0:-4] +'0' \
+                                      +' 255.255.255.0 ' +str(sheet.cell(1,5).value)[0:-3]
+                            console.write(ip_route.encode() + b'\n')
+                            time.sleep(3)
+
 
                     console.write(b'exit \n')
                     time.sleep(1)
