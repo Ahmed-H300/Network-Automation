@@ -3,32 +3,10 @@ import time
 import xlrd
 import datetime
 
-
-
-
 i = 1  # for routers
 j = 1  # for switches
 
-
 date_time = datetime.datetime.now()
-
-def vlan_switch(file_name):
-    pass
-    # book = xlrd.open_workbook(file_name)
-    # sheet = book.sheet_by_name(book.sheet_names()[0])
-    # console.write(b'no \n')
-    # for i in range(2, sheet.nrows):
-    #                 x = sheet.row_values(i)
-    #                 val = x[2]
-    #                 if (type(val) == str and val.find(':')):
-    #                     val= val.replace(':','-')
-    #                 else:
-    #                     val = str(int(val))
-    #                 vlan = "vlan " + val + '\n'
-    #                 console.write(vlan.encode())
-    #                 console.write(b'exit \n')
-
-
 try:
     # to push the initial config on all devices (routers and switches)
     for por in ['COM6', 'COM7', 'COM8', 'COM9']:
@@ -158,31 +136,30 @@ try:
                             console.write(b'exit \n')
 
                         time.sleep(1)
-                        #10.1.1.x ->192.168.11.2
-                        ip_route = 'ip route ' + str(sheet.cell(4,5).value)[0:-4] +'0' \
-                                    +' 255.255.255.0 ' +str(sheet.cell(2,5).value)[0:-3]
+                        # 10.1.1.x ->192.168.11.2
+                        ip_route = 'ip route ' + str(sheet.cell(4, 5).value)[0:-4] + '0' \
+                                   + ' 255.255.255.0 ' + str(sheet.cell(2, 5).value)[0:-3]
                         console.write(ip_route.encode() + b'\n')
                         time.sleep(3)
                         console.write(b'exit\n')
-                        
+
                         time.sleep(1)
                         time.sleep(1)
                         console.write(b'show run \n')
                         time.sleep(1)
                         time.sleep(1)
-                        
-                       
+
                         numberofbytes = console.inWaiting()
                         time.sleep(1)
                         time.sleep(1)
-                        output = console.read(numberofbytes )
+                        output = console.read(numberofbytes)
                         time.sleep(1)
                         time.sleep(1)
                         data = output.decode()
                         f = open("configurations.txt", "a+")
-                        f.write(str(date_time)+ '\n'+ str(data)+'\n'+"////////////////////////////\n")
+                        f.write(str(date_time) + '\n' + str(data) + '\n' + "////////////////////////////\n")
                         f.close()
-                        
+
                     elif por in ['COM7']:
                         for index in range(2, 6, 2):
                             data_row = sheet.row_values(index)
@@ -199,9 +176,9 @@ try:
                             console.write(b'exit \n')
 
                         time.sleep(1)
-                        #route 192.168.10.x -> 192.168.11.1
-                        ip_route = 'ip route ' + str(sheet.cell(3,5).value)[0:-4] +'0' \
-                                    +' 255.255.255.0 ' +str(sheet.cell(1,5).value)[0:-3]
+                        # route 192.168.10.x -> 192.168.11.1
+                        ip_route = 'ip route ' + str(sheet.cell(3, 5).value)[0:-4] + '0' \
+                                   + ' 255.255.255.0 ' + str(sheet.cell(1, 5).value)[0:-3]
                         console.write(ip_route.encode() + b'\n')
                         time.sleep(3)
                         console.write(b'exit\n')
@@ -210,24 +187,22 @@ try:
                         console.write(b'show run \n')
                         time.sleep(1)
                         time.sleep(1)
-                        
-                       
+
                         numberofbytes = console.inWaiting()
                         time.sleep(1)
                         time.sleep(1)
-                        output = console.read(numberofbytes )
+                        output = console.read(numberofbytes)
                         time.sleep(1)
                         time.sleep(1)
                         data = output.decode()
                         f = open("configurations.txt", "a+")
-                        f.write(str(date_time)+ '\n'+ str(data)+'\n'+"////////////////////////////\n")
+                        f.write(str(date_time) + '\n' + str(data) + '\n' + "////////////////////////////\n")
                         f.close()
 
-
-                    #console.write(b'exit \n')
-                    #time.sleep(1)
-                    #console.write(b'exit \n')
-                    #time.sleep(1)
+                    console.write(b'exit \n')
+                    time.sleep(1)
+                    console.write(b'exit \n')
+                    time.sleep(1)
                     i += 1
 
                 # To configure switches
@@ -298,7 +273,19 @@ try:
                     time.sleep(1)
                     console.write(b'\n')
                     time.sleep(1)
-                    # vlan_switch(f'switch {j} ports.xlsx')
+
+                    if por == "COM8":
+                        data_row_R_route = sheet_R.row_values(4)
+                        route_1 = data_row_R_route[5][0:-4]
+                        ip_route = 'ip route ' + route_1 + '0'+' 255.255.255.0 '+R[0]
+                        console.write(ip_route.encode() + b'\n')
+                    if por == "COM9":
+                        data_row_R_route = sheet_R.row_values(3)
+                        route_1 = data_row_R_route[5][0:-4]
+                        ip_route = 'ip route ' + route_1 + '0'+' 255.255.255.0 '+R[0]
+                        console.write(ip_route.encode() + b'\n')
+
+
 
                     ######################
                     # ### create vlans ###
@@ -349,28 +336,26 @@ try:
                             console.write(b"switchport access vlan " + str(int(oneVlan[2])).encode() + b'\n')
                             time.sleep(1)
                             console.write(b"exit\n")
-                    
 
                         n += 1
                     time.sleep(1)
-                   
+
                     console.write(b'exit\n')
                     time.sleep(1)
                     time.sleep(1)
                     console.write(b'show run \n')
                     time.sleep(1)
                     time.sleep(1)
-                        
-                       
+
                     numberofbytes = console.inWaiting()
                     time.sleep(1)
                     time.sleep(1)
-                    output = console.read(numberofbytes )
+                    output = console.read(numberofbytes)
                     time.sleep(1)
                     time.sleep(1)
                     data = output.decode()
                     f = open("configurations.txt", "a+")
-                    f.write(str(date_time)+ '\n'+ str(data)+'\n'+"////////////////////////////\n")
+                    f.write(str(date_time) + '\n' + str(data) + '\n' + "////////////////////////////\n")
                     f.close()
                     j += 1
 except Exception as err:
@@ -378,5 +363,5 @@ except Exception as err:
 finally:
     print('the program will terminate now!')
 
-#switch 1: ip route 10.1.1.0 255.255.255.0 192.168.10.1
-#switch 2: ip route 192.168.10.0 255.255.255.0 10.1.1.1
+# switch 1: ip route 10.1.1.0 255.255.255.0 192.168.10.1
+# switch 2: ip route 192.168.10.0 255.255.255.0 10.1.1.1
