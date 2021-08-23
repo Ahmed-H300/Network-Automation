@@ -1,10 +1,16 @@
 import serial
 import time
 import xlrd
+import datetime
+
+
+
 
 i = 1  # for routers
 j = 1  # for switches
 
+
+date_time = datetime.datetime.now()
 
 def vlan_switch(file_name):
     pass
@@ -154,6 +160,26 @@ try:
                                       +' 255.255.255.0 ' +str(sheet.cell(2,5).value)[0:-3]
                             console.write(ip_route.encode() + b'\n')
                             time.sleep(3)
+                        time.sleep(1)
+                        console.write(b'exit\n')
+                        
+                        time.sleep(1)
+                        time.sleep(1)
+                        console.write(b'show run \n')
+                        time.sleep(1)
+                        time.sleep(1)
+                        
+                       
+                        numberofbytes = console.inWaiting()
+                        time.sleep(1)
+                        time.sleep(1)
+                        output = console.read(numberofbytes )
+                        time.sleep(1)
+                        time.sleep(1)
+                        data = output.decode()
+                        f = open("configurations.txt", "a+")
+                        f.write(str(date_time)+ '\n'+ str(data)+'\n'+"////////////////////////////\n")
+                        f.close()
                         
                     elif por in ['COM7']:
                         for index in range(2, 6, 2):
@@ -173,12 +199,32 @@ try:
                                       +' 255.255.255.0 ' +str(sheet.cell(1,5).value)[0:-3]
                             console.write(ip_route.encode() + b'\n')
                             time.sleep(3)
+                        time.sleep(1)
+                        
+                        console.write(b'exit\n')
+                        time.sleep(1)
+                        time.sleep(1)
+                        console.write(b'show run \n')
+                        time.sleep(1)
+                        time.sleep(1)
+                        
+                       
+                        numberofbytes = console.inWaiting()
+                        time.sleep(1)
+                        time.sleep(1)
+                        output = console.read(numberofbytes )
+                        time.sleep(1)
+                        time.sleep(1)
+                        data = output.decode()
+                        f = open("configurations.txt", "a+")
+                        f.write(str(date_time)+ '\n'+ str(data)+'\n'+"////////////////////////////\n")
+                        f.close()
 
 
-                    console.write(b'exit \n')
-                    time.sleep(1)
-                    console.write(b'exit \n')
-                    time.sleep(1)
+                    #console.write(b'exit \n')
+                    #time.sleep(1)
+                    #console.write(b'exit \n')
+                    #time.sleep(1)
                     i += 1
 
                 # To configure switches
@@ -300,8 +346,29 @@ try:
                             console.write(b"switchport access vlan " + str(int(oneVlan[2])).encode() + b'\n')
                             time.sleep(1)
                             console.write(b"exit\n")
+                    
 
                         n += 1
+                    time.sleep(1)
+                   
+                    console.write(b'exit\n')
+                    time.sleep(1)
+                    time.sleep(1)
+                    console.write(b'show run \n')
+                    time.sleep(1)
+                    time.sleep(1)
+                        
+                       
+                    numberofbytes = console.inWaiting()
+                    time.sleep(1)
+                    time.sleep(1)
+                    output = console.read(numberofbytes )
+                    time.sleep(1)
+                    time.sleep(1)
+                    data = output.decode()
+                    f = open("configurations.txt", "a+")
+                    f.write(str(date_time)+ '\n'+ str(data)+'\n'+"////////////////////////////\n")
+                    f.close()
                     j += 1
 except Exception as err:
     print('An exception was thrown!: {}'.format(err))
