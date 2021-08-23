@@ -156,11 +156,13 @@ try:
                             console.write(b'no shut \n')
                             time.sleep(1)
                             console.write(b'exit \n')
-                            ip_route = 'ip route ' + str(data_row[5])[0:-4] +'0' \
-                                      +' 255.255.255.0 ' +str(sheet.cell(2,5).value)[0:-3]
-                            console.write(ip_route.encode() + b'\n')
-                            time.sleep(3)
+
                         time.sleep(1)
+                        #10.1.1.x ->192.168.11.2
+                        ip_route = 'ip route ' + str(sheet.cell(4,5).value)[0:-4] +'0' \
+                                    +' 255.255.255.0 ' +str(sheet.cell(2,5).value)[0:-3]
+                        console.write(ip_route.encode() + b'\n')
+                        time.sleep(3)
                         console.write(b'exit\n')
                         
                         time.sleep(1)
@@ -195,12 +197,13 @@ try:
                             console.write(b'no shut \n')
                             time.sleep(1)
                             console.write(b'exit \n')
-                            ip_route = 'ip route ' + str(data_row[5])[0:-4] +'0' \
-                                      +' 255.255.255.0 ' +str(sheet.cell(1,5).value)[0:-3]
-                            console.write(ip_route.encode() + b'\n')
-                            time.sleep(3)
+
                         time.sleep(1)
-                        
+                        #route 192.168.10.x -> 192.168.11.1
+                        ip_route = 'ip route ' + str(sheet.cell(3,5).value)[0:-4] +'0' \
+                                    +' 255.255.255.0 ' +str(sheet.cell(1,5).value)[0:-3]
+                        console.write(ip_route.encode() + b'\n')
+                        time.sleep(3)
                         console.write(b'exit\n')
                         time.sleep(1)
                         time.sleep(1)
@@ -374,3 +377,6 @@ except Exception as err:
     print('An exception was thrown!: {}'.format(err))
 finally:
     print('the program will terminate now!')
+
+#switch 1: ip route 10.1.1.0 255.255.255.0 192.168.10.1
+#switch 2: ip route 192.168.10.0 255.255.255.0 10.1.1.1
